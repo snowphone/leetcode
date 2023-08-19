@@ -1,6 +1,7 @@
 
 class Solution:
     def partitionLabels(self, s: str) -> List[int]:
+        # Group by characters
         positions = defaultdict(list)
         for i, ch in enumerate(s):
             positions[ch].append(i)
@@ -9,7 +10,7 @@ class Solution:
         parts = [(min(vals), max(vals)) for vals in positions.values()]
         parts.sort()
         
-        # Merge
+        # Now it is equivalent to "Merge Overlapped Intervals" problem
         merged = parts[:1]
         for fir, last in parts[1:]:
             if fir <= merged[-1][1]:
