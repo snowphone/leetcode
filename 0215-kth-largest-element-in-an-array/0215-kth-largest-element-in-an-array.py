@@ -1,12 +1,24 @@
 from heapq import *
+class Heap(list):
+    def __init__(self, key: Callable):
+        super().__init__()
+        self.key = key
+    
+    def put(self, item):
+        heappush(self, (self.key(item), item) )
+
+    def get(self):
+        return heappop(self)[1]
+
+    def peak(self):
+        return self[0][1]
+
 class Solution:
     def findKthLargest(self, nums: List[int], k: int) -> int:
-        heap = []
-        K = len(nums) - k + 1
+        # /\
+        heap = Heap(key=lambda it: it)
         for n in nums:
-            heappush(heap, -n)
-            if len(heap) > K:
-                heappop(heap)
-        
-        return -heappop(heap)
-        
+            heap.put(n)
+            while len(heap) > k:
+                heap.get()
+        return heap.peak()
