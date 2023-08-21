@@ -3,24 +3,27 @@
 #     def __init__(self, val=0, next=None):
 #         self.val = val
 #         self.next = next
-from collections import deque
+from queue import PriorityQueue
+
 class Solution:
     def mergeKLists(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:
+        ListNode.__lt__ = lambda me, you: me.val < you.val
+
         dummy_head = ListNode()
         tail = dummy_head
 
-        lists = deque(it for it in lists if it)
+        cnt = sum(1 for it in lists if it)
+        q = PriorityQueue()
+        for it in filter(None, lists):
+            q.put(it)
 
-        while lists:
-            i = min(range(len(lists)), key=lambda idx: lists[idx].val)
-            nd = lists[i]
+        while not q.empty():
+            nd = q.get()
 
             tail.next = nd
             tail = tail.next
 
-            lists[i] = nd.next
-
-            if not lists[i]:
-                del lists[i]
-
+            if nd.next:
+                q.put(nd.next)
+            
         return dummy_head.next
