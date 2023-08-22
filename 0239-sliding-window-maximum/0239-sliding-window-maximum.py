@@ -2,6 +2,7 @@ from sortedcontainers import SortedList
 
 class Solution:
     def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
+        'Time Complexity: O(n lg(k) )'
         answer = []
 
         window = SortedList()
