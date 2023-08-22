@@ -19,29 +19,25 @@ class Solution:
     def _merge(self, lhs, rhs):
         dummy = ListNode()
         tail = dummy
-        while lhs or rhs:
-            if not lhs:
-                tail.next = rhs
-                break
-            if not rhs:
-                tail.next = lhs
-                break
+        while lhs and rhs:
             if lhs.val < rhs.val:
                 tail.next = lhs
-                tail = tail.next
                 lhs = lhs.next
             else:
                 tail.next = rhs
-                tail = tail.next
                 rhs = rhs.next
+            tail = tail.next
+        if not lhs:
+            tail.next = rhs
+        if not rhs:
+            tail.next = lhs
         return dummy.next
 
     def sortList(self, head: Optional[ListNode]) -> Optional[ListNode]:
         if not head or not head.next:
             return head
-        one, two = self._partition(head)
-        one = self.sortList(one)
-        two = self.sortList(two)
+        lhs, rhs = self._partition(head)
+        lhs, rhs = map(self.sortList, [lhs, rhs])
 
-        return self._merge(one, two)
+        return self._merge(lhs, rhs)
 
