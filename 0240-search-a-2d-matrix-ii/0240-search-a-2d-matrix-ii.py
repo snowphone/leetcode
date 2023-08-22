@@ -6,8 +6,9 @@ class Solution:
         return idx < len(line) and line[idx] == target
 
     def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
-        n_row = len(matrix)
-        n_col = len(matrix[0])
+        'Time Complexity: O(m lg(n) )'
+        n_row = len(matrix)  # m
+        n_col = len(matrix[0])  # n
 
         return any(
             self.bsearch(line, target) for line in matrix
