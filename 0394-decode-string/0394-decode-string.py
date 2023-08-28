@@ -1,46 +1,52 @@
 from re import compile
 from collections import deque
 
+r"""
+<expr>          ::= ( <repeated_expr> | <str> )+
+<repeated_expr> ::= <num> '[' <expr> ']'
+<num>           ::= \d+
+<str>           ::= [a-z]+
+"""
 
-# expr := (num '[' expr ']' | str)+
-# num := \d+
-# str := [a-z]+
 
-
-class INode:
+class IExpr:
     def __init__(self, tokens: deque[str]):
         self.tokens = tokens
 
-    def execute(self):
+    def eval(self) -> str:
         ...
 
 
-class Str(INode):
-    def execute(self):
+class Str(IExpr):
+    def eval(self):
         return self.tokens.popleft()
 
 
-class Number(INode):
-    def execute(self):
+class Number(IExpr):
+    def eval(self):
         return int(self.tokens.popleft())
 
-class Expr(INode):
-    def execute(self):
+
+class RepeatedStr(IExpr):
+    def eval(self):
+        num = Number(self.tokens).eval()
+        self.tokens.popleft()  # [
+        expr = Expr(self.tokens).eval()
+        self.tokens.popleft()  # ]
+        return num * expr
+
+
+class Expr(IExpr):
+    def eval(self):
         stk = []
         while self.tokens:
             token = self.tokens[0]
             if token.isdecimal():
-                node = Number(self.tokens)
-                stk.append(node.execute())
-            elif token == "[":
-                self.tokens.popleft()
-                node = Expr(self.tokens)
-                stk[-1] = stk[-1] * node.execute()
-            elif token == "]":
-                self.tokens.popleft()
+                stk.append(RepeatedStr(self.tokens).eval())
+            elif token.isalpha():
+                stk.append(Str(self.tokens).eval())
+            else:
                 break
-            else:  # str
-                stk.append(Str(self.tokens).execute())
         return "".join(stk)
 
 
@@ -49,7 +55,4 @@ class Solution:
 
     def decodeString(self, s: str) -> str:
         tokens = deque(it.group() for it in self.token_pattern.finditer(s))
-        exprs = []
-        while tokens:
-            exprs.append(Expr(tokens).execute())
-        return "".join(exprs)
+        return Expr(tokens).eval()
