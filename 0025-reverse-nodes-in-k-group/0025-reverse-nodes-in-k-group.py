@@ -6,13 +6,17 @@
 
 class Solution:
     def reverse(self, head, k):
-        'Return [reversed head, reversed tail, next head]'
+        '''
+        If len(head) >= k, reverse the first `k` nodes and
+        return (reversed head, reversed tail, next head).
+        Otherwise, return (head, None, None).
+        '''
         # Check whether the length is enough to reverse
-        _nd = head
+        nd = head
         for _ in range(k):
-            if not _nd:
+            if not nd:
                 return head, None, None
-            _nd = _nd.next
+            nd = nd.next
         
         # Reverse first `k` nodes
         prev, nd = None, head
@@ -26,12 +30,12 @@ class Solution:
     def reverseKGroup(self, head: Optional[ListNode], k: int) -> Optional[ListNode]:
         dummy_head = ListNode(0, head)
         tail = dummy_head
-        nd = head
+        it = head
 
-        while nd:
-            reversed_head, reversed_tail, new_head = self.reverse(nd, k)
+        while it:
+            reversed_head, reversed_tail, new_head = self.reverse(it, k)
             tail.next = reversed_head
             tail = reversed_tail
-            nd = new_head
+            it = new_head
             
         return dummy_head.next
