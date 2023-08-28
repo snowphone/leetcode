@@ -2,7 +2,7 @@ from re import compile
 from collections import deque
 
 
-# expr := num [ expr ] | str
+# expr := (num '[' expr ']' | str)+
 # num := \d+
 # str := [a-z]+
 
@@ -24,21 +24,12 @@ class Number(INode):
     def execute(self):
         return int(self.tokens.popleft())
 
-
-def is_number(token: str):
-    try:
-        int(token)
-        return True
-    except:
-        return False
-
-
 class Expr(INode):
     def execute(self):
         stk = []
         while self.tokens:
             token = self.tokens[0]
-            if is_number(token):
+            if token.isdecimal():
                 node = Number(self.tokens)
                 stk.append(node.execute())
             elif token == "[":
