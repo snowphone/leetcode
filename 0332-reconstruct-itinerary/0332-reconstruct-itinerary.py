@@ -1,10 +1,10 @@
 from queue import SimpleQueue
-
 from sortedcontainers import SortedList
 
 class Solution:
     def findItinerary(self, tickets: List[List[str]]) -> List[str]:
         graph = defaultdict(SortedList)
+
         for f, t in tickets:
             graph[f].add(t)
 
@@ -21,7 +21,5 @@ class Solution:
                 graph[start].add(it)
             return False, []
         
-        ok, answer = dfs(
-            "JFK", graph, sum(len(it) for it in graph.values())
-        )
+        ok, answer = dfs("JFK", graph, sum(len(it) for it in graph.values()) )
         return answer
