@@ -1,4 +1,5 @@
 from queue import SimpleQueue
+
 from sortedcontainers import SortedList
 
 class Solution:
