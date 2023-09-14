@@ -21,5 +21,7 @@ class Solution:
                 graph[start].add(it)
             return False, []
         
-        ok, answer = dfs("JFK", graph, sum(len(it) for it in graph.values()) )
+        ok, answer = dfs(
+            "JFK", graph, sum(len(it) for it in graph.values())
+        )
         return answer
