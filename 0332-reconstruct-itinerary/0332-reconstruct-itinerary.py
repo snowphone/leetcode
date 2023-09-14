@@ -12,7 +12,7 @@ class Solution:
             if not n_node:
                 return True, [frm]
 
-            for it in sorted(graph[frm]):
+            for it in graph[frm]:
                 graph[frm].remove(it)
                 ok, ans = dfs(it, graph, n_node - 1)
                 if ok:
