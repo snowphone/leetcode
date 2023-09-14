@@ -8,17 +8,17 @@ class Solution:
         for f, t in tickets:
             graph[f].add(t)
 
-        def dfs(start, graph, n_node):
+        def dfs(frm, graph, n_node):
             if not n_node:
-                return True, [start]
+                return True, [frm]
 
-            for it in graph[start]:
-                graph[start].remove(it)
+            for it in graph[frm]:
+                graph[frm].remove(it)
                 ok, ans = dfs(it, graph, n_node - 1)
                 if ok:
-                    graph[start].add(it)
-                    return True, [start, *ans]
-                graph[start].add(it)
+                    graph[frm].add(it)
+                    return True, [frm, *ans]
+                graph[frm].add(it)
             return False, []
         
         ok, answer = dfs("JFK", graph, sum(len(it) for it in graph.values()) )
