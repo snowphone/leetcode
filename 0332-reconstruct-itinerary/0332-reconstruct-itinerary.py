@@ -8,7 +8,7 @@ class Solution:
         for f, t in tickets:
             graph[f].add(t)
 
-        def dfs(start: int, graph: Dict[int, SortedList[int]], n_node: int):
+        def dfs(start, graph, n_node):
             if not n_node:
                 return True, [start]
 
