@@ -1,4 +1,16 @@
-from queue import PriorityQueue
+#from queue import PriorityQueue
+from heapq import heappush, heappop
+class PriorityQueue:
+    def __init__(self):
+        self.q = []
+    def put(self, item):
+        heappush(self.q, item)
+    def get(self):
+        return heappop(self.q)
+    
+    def empty(self):
+        return not self.q
+        
 class Solution:
     def networkDelayTime(self, times: List[List[int]], n: int, k: int) -> int:
         INF = 987654321
