@@ -7,6 +7,7 @@ class Solution:
         n_row = len(heights)
         n_col = len(heights[0])
 
+        # Graph-ize
         graph = defaultdict(lambda: defaultdict(int) )
         for r in range(n_row):
             for c in range(n_col):
@@ -25,8 +26,8 @@ class Solution:
                     graph[it][jt] = abs(h1-h2)
                     graph[jt][it] = abs(h1-h2)
 
+        # Dijkstra
         remaining = set(graph.keys())
-
         q = PriorityQueue()
         for it in graph.keys():
             q.put( (987654321, it) )
