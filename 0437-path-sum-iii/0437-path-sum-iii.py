@@ -5,28 +5,28 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-    def pathSum(self, root: Optional[TreeNode], targetSum: int) -> int:
+    def pathSum(self, root: Optional[TreeNode], k: int) -> int:
         """
         sum(nums[i+1, j+1]) == k
-         <=> s(j) - s(i) == k, where def s(i): return sum(nums[0:i+1])
-         <=> s(i) exists s.t. s(j) - k == s(i)
-        
-
+          <=> s(j) - s(i) == k, where def s(i): return sum(nums[0:i+1])
+          <=> s(i) exists s.t. s(j) - k == s(i)
         """
         
 
-        def dfs(root, acc, pfsum):
+        def dfs(root: Optional[TreeNode], sj: int, pfsum: Dict[int, int]):
             answer = 0
             if not root:
                 return answer
 
-            acc += root.val  # Update s(j)
-            si = acc - targetSum
+            sj += root.val
+            si = sj - k
             answer += pfsum[si]
-            pfsum[acc] += 1
+            pfsum[sj] += 1
 
             for child in [root.left, root.right]:
-                answer += dfs(child, acc, pfsum.copy())
+                answer += dfs(child, sj, pfsum)
+
+            pfsum[sj] -= 1  # Rollback change
             return answer
         
         cache = defaultdict(int)
