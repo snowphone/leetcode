@@ -4,7 +4,7 @@ class Solution:
         def fn(b: int, e: int):
             "Find an index with the biggest element"
             if e - b <= 3:
-                return max(range(b, e), key=lambda i: nums[i])
+                return max(range(b, e), key=nums.__getitem__)
             
             m = (b + e) // 2
             
@@ -14,8 +14,8 @@ class Solution:
                 return fn(m, e)
             elif nums[b] < nums[m] < nums[e-1]: # All sorted
                 return e-1
-            #print(b, e)
-            return None
+            
+            raise RuntimeError("Dead end")
                 
                 
             return
