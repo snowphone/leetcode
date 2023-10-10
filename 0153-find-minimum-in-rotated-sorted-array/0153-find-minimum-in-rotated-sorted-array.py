@@ -8,17 +8,18 @@ class Solution:
             
             m = (b + e) // 2
             
-            if nums[b] > nums[m] < nums[e-1]:  # Hill is on the left side.
-                return fn(b, m)
-            elif nums[b] < nums[m] > nums[e-1]: # Hill is on the right side.
-                return fn(m, e)
-            elif nums[b] < nums[m] < nums[e-1]: # All sorted
-                return e-1
+            return {
+                nums[b] > nums[m] < nums[e-1]: (  # Hill is on the left side.
+                    lambda: fn(b, m)
+                ),
+                nums[b] < nums[m] > nums[e-1]: (  # Hill is on the right side.
+                    lambda: fn(m, e)
+                ),
+                nums[b] < nums[m] < nums[e-1]: (  # All sorted
+                    lambda: e-1
+                ),
+            }[True]()
             
-            raise RuntimeError("Dead end")
-                
-                
-            return
         
         n = len(nums)
         idx = fn(0, n)
