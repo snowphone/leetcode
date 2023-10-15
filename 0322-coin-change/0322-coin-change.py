@@ -1,18 +1,29 @@
+from functools import cache
 class Solution:
     def coinChange(self, coins: List[int], amount: int) -> int:
+        
+        n = len(coins)
+        coins.sort(reverse=True)
+
         @cache
-        def fn(amount):
-            if amount == 0:
+        def fn(idx: int, target: int):
+            if target == 0:
                 return 0
-            if min(coins) > amount:
+            if target < 0 or idx == n:
                 return -1
             
-            cands = []
-            for coin in coins:
-                tmp = fn(amount - coin)
-                if tmp == -1:
-                    continue
-                cands.append(tmp + 1)
-            return min(cands) if cands else -1
-    
-        return fn(amount)
+            tmp1 = fn(idx, target - coins[idx])
+            if tmp1 != -1:
+                tmp1 += 1
+            tmp2 = fn(idx + 1, target)
+
+            if tmp1 >= 0 and tmp2 >= 0:
+                return min(tmp1, tmp2)
+            elif tmp1 >= 0:
+                return tmp1
+            elif tmp2 >= 0:
+                return tmp2
+            return -1
+
+        return fn(0, amount)
+        
