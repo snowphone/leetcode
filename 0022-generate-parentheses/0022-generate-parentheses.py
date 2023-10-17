@@ -1,5 +1,6 @@
 class Solution:
     def generateParenthesis(self, n: int) -> List[str]:
+        "Naive backtracking"
         def valid(s: str):
             stk = []
             for ch in s:
