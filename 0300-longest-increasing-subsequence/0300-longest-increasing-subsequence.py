@@ -1,19 +1,21 @@
-from functools import cache
+from sortedcontainers import SortedSet
+from operator import itemgetter
+from heapq import heappush, heappop
 
 class Solution:
-    @cache
-    def impl(self, idx: int):
-        target = self.nums[idx]
-        if(idx == 0):
-            return 1;
-        
-        smallerOnes = [i for i in range(0, idx) if self.nums[i] < target]
-        if not smallerOnes:
-            return 1
-        cand = [self.impl(i) for i in smallerOnes]
-        return max(cand) + 1
-        
     def lengthOfLIS(self, nums: List[int]) -> int:
-        self.nums = nums
-        inputs = list(range(len(nums)-1, -1, -1))
-        return max([self.impl(i) for i in inputs])
+        @cache
+        def fn(idx):
+            if idx == 0:
+                return 1
+            
+            answer = 0
+            it = nums[idx]
+            for i in range(idx):
+                jt = nums[i]
+                if jt >= it:
+                    continue
+                answer = max(answer, fn(i))
+            return answer + 1
+        
+        return max(fn(i) for i in range(len(nums)))
