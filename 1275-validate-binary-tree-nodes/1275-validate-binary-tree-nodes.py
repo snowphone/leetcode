@@ -3,6 +3,7 @@ class Solution:
         indegree = [0] * n
         graph = defaultdict(list)
 
+        # Create a graph
         for i in range(n):
             if leftChild[i] != -1:
                 graph[i].append(leftChild[i])
@@ -13,7 +14,7 @@ class Solution:
         
         roots = [ i for i, it in enumerate(indegree) if it == 0 ]
         if len(roots) != 1:
-            return False
+            return False  # Only one root is allowed
         root = roots[0]
         
         visited = set()
@@ -28,4 +29,5 @@ class Solution:
                 dfs(child) for child in graph[root]
             )
         
+        # Visit only once but every node
         return dfs(root) and len(visited) == n
