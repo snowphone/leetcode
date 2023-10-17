@@ -1,19 +1,15 @@
-from sortedcontainers import SortedSet
-from operator import itemgetter
-from heapq import heappush, heappop
-
 class Solution:
     def lengthOfLIS(self, nums: List[int]) -> int:
+        "O(n^2) algorithm"
         @cache
         def fn(idx):
             if idx == 0:
                 return 1
             
-            answer = 0
             it = nums[idx]
+            answer = 0
             for i in range(idx):
-                jt = nums[i]
-                if jt >= it:
+                if nums[i] >= it:
                     continue
                 answer = max(answer, fn(i))
             return answer + 1
