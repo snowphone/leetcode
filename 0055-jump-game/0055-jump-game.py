@@ -14,4 +14,7 @@ class Solution:
             return any(
                 fn(j) for j in range(i+1, i + nums[i] + 1)
             )
+        for i in range(n-1, 0, -1):
+            fn(i)  # Warm up cache
+            
         return fn(0)
