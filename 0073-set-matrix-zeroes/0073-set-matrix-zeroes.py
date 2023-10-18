@@ -1,22 +1,27 @@
 class Solution:
     def setZeroes(self, matrix: List[List[int]]) -> None:
-        """
-        Do not return anything, modify matrix in-place instead.
-        """
         n_row = len(matrix)
         n_col = len(matrix[0])
-        def clear(r, c):
-            for i in range(n_row):
-                matrix[i][c] = 0
-            for j in range(n_col):
-                matrix[r][j] = 0
-        
 
-        tmp = []
-        for i in range(n_row):
-            for j in range(n_col):
-                if matrix[i][j] != 0:
+        row_flag = [False] * n_row
+        col_flag = [False] * n_col
+
+        for r in range(n_row):
+            for c in range(n_col):
+                if matrix[r][c] != 0:
                     continue
-                tmp.append( (i, j) )
-        for i, j in tmp:
-            clear(i, j)
+                row_flag[r] = True
+                col_flag[c] = True
+        
+        for r in range(n_row):
+            if not row_flag[r]:
+                continue
+            for c in range(n_col):
+                matrix[r][c] = 0
+
+        for c in range(n_col):
+            if not col_flag[c]:
+                continue
+            for r in range(n_row):
+                matrix[r][c] = 0
+        return
