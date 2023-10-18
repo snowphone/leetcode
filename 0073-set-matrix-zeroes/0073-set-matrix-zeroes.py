@@ -3,25 +3,27 @@ class Solution:
         n_row = len(matrix)
         n_col = len(matrix[0])
 
-        row_flag = [False] * n_row
-        col_flag = [False] * n_col
+        def row_fill(r):
+            for c in range(n_col):
+                if matrix[r][c] == 0:
+                    continue
+                matrix[r][c] = None
+        def col_fill(c):
+            for r in range(n_row):
+                if matrix[r][c] == 0:
+                    continue
+                matrix[r][c] = None
 
         for r in range(n_row):
             for c in range(n_col):
                 if matrix[r][c] != 0:
                     continue
-                row_flag[r] = True
-                col_flag[c] = True
-        
-        for r in range(n_row):
-            if not row_flag[r]:
-                continue
-            for c in range(n_col):
-                matrix[r][c] = 0
+                row_fill(r)
+                col_fill(c)
 
-        for c in range(n_col):
-            if not col_flag[c]:
-                continue
-            for r in range(n_row):
+        for r in range(n_row):
+            for c in range(n_col):
+                if matrix[r][c] is not None:
+                    continue
                 matrix[r][c] = 0
         return
