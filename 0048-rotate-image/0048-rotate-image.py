@@ -1,22 +1,21 @@
 class Solution:
-    def transpose(self, matrix):
+    def rotate(self, matrix: List[List[int]]) -> None:
+        """
+        1. Transpose the matrix
+        2. Reverse each row
+        """
+
+        self.transpose(matrix)
+        for row in matrix:
+            row.reverse()
+        return
+    
+    def transpose(self, matrix: List[List[int]]) -> None:
         n_row = len(matrix)
         n_col = len(matrix[0])
 
-        for i in range(n_row):
-            for j in range(i+1, n_col):
-                matrix[i][j], matrix[j][i] = matrix[j][i], matrix[i][j]
+        for r in range(n_row):
+            for c in range(r+1, n_col):
+                matrix[r][c], matrix[c][r] = matrix[c][r], matrix[r][c]
         return
-
-    def rev(self, matrix):
-        for line in matrix:
-            line.reverse()
-        return
-
-    def rotate(self, matrix: List[List[int]]) -> None:
-        """
-        Do not return anything, modify matrix in-place instead.
-        """
-        self.transpose(matrix)
-        self.rev(matrix)
-        return
+        
