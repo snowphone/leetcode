@@ -21,9 +21,6 @@
 #        """
 
 
-import itertools
-from typing import List
-
 def gen(nestedList: List[NestedInteger]):
     for it in nestedList:
         if it.isInteger():
@@ -37,14 +34,13 @@ class NestedIterator:
     def __init__(self, nestedList: List[NestedInteger]):
         self.gen = gen(nestedList)
         self.sentinel = object()
+        self.top = next(self.gen, self.sentinel)
+        return
         
     def next(self) -> int:
-        return next(self.gen)
+        result = self.top
+        self.top = next(self.gen, self.sentinel)
+        return result
     
     def hasNext(self) -> bool:
-        try:
-            tmp = next(self.gen)
-            self.gen = itertools.chain([tmp], self.gen)
-            return True
-        except StopIteration:
-            return False
+        return self.top is not self.sentinel
