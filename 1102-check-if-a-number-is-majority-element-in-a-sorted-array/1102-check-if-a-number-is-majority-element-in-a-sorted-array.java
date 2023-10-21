@@ -4,29 +4,26 @@ class Solution {
         return bisectRight(nums, target, 0, n) - bisectLeft(nums, target, 0, n) > (n / 2.);
     }
 
+    private int bisectRight(int[] nums, int target, int beg, int end) {
+        return bisect(nums, target, beg, end, (trgt, mid) ->  trgt < nums[mid] );
+    }
+    
+    private int bisectLeft(int[] nums, int target, int beg, int end) {
+        return bisect(nums, target, beg, end, (trgt, mid) ->  trgt <= nums[mid] );
+    }
+
     /**
      * Bisect left/right는 mid를 버려가는 것이 특징이다.
      */
-    private int bisectRight(int[] nums, int target, int beg, int end) {
+    private int bisect(int[] nums, int target, int beg, int end, BiFunction<Integer, Integer, Boolean> pred) {
         if (beg >= end) {
             return beg;
         }
         int mid = (beg + end) / 2;
-        if (target < nums[mid]) {
-            return bisectRight(nums, target, beg, mid);
-        }  else {
-            return bisectRight(nums, target, mid + 1, end);
-        }
-    }
-    private int bisectLeft(int[] nums, int target, int beg, int end) {
-        if (beg >= end) {
-            return beg;
-        }
-        int mid = (beg + end) / 2;
-        if (nums[mid] < target) {
-            return bisectLeft(nums, target, mid+1, end);
+        if (pred.apply(target, mid)) {
+            return bisect(nums, target, beg, mid, pred);
         } else {
-            return bisectLeft(nums, target, beg, mid);
+            return bisect(nums, target, mid + 1, end, pred);
         }
     }
 }
