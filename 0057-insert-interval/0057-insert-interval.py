@@ -1,7 +1,11 @@
 class Solution:
     def insert(self, intervals: List[List[int]], newInterval: List[int]) -> List[List[int]]:
         "Two-pass O(n) algorithm"
-        merged = [it for it in intervals if it[0] < newInterval[0]] + [newInterval] +  [it for it in intervals if it[0] >= newInterval[0]]
+        merged = [
+            *(it for it in intervals if it[0] < newInterval[0]),
+            newInterval,
+            *(it for it in intervals if it[0] >= newInterval[0]),
+        ]
 
         answer = merged[:1]
         for it in merged[1:]:
