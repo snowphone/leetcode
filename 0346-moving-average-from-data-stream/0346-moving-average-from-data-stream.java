@@ -1,17 +1,21 @@
 class MovingAverage {
     Deque<Integer> window = new LinkedList<>();
     int size = 0;
+    int sum = 0;
+    
     public MovingAverage(int size) {
         this.size = size;
     }
 
     public double next(int val) {
         if (window.size() == this.size) {
-            window.pollFirst();
+            this.sum -= window.pollFirst();
         }
+
         window.offerLast(val);
+        this.sum += val;
         
-        return window.stream().mapToInt(Integer::intValue).average().getAsDouble();
+        return this.sum / (double) window.size();
     }
 }
 
