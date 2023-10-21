@@ -2,7 +2,7 @@ from operator import itemgetter
 
 class Solution:
     def canAttendMeetings(self, intervals: List[List[int]]) -> bool:
-        intervals.sort(key=itemgetter(1))
+        intervals.sort(key=itemgetter(0))
 
 
         return all(
