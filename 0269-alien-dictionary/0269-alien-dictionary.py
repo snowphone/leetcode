@@ -2,23 +2,12 @@ from itertools import chain
 from queue import SimpleQueue
 
 class Solution:
-    def analyze(self, lhs: str, rhs: str, graph, indegree):
-        n = min(len(lhs), len(rhs))
-
-        for i in range(n):
-            it = lhs[i]
-            jt = rhs[i]
-            if it == jt:
-                graph[it]
-                continue
-            graph[it].add(jt)
-            indegree[jt].add(it)
-            return True
-        
-        return len(lhs) <= len(rhs)
-                
     def alienOrder(self, words: List[str]) -> str:
         # Topological sort
+
+        if len(words) == 1:
+            return ''.join(set(words[0]))
+
         graph = defaultdict(set)
         indegree = defaultdict(set)
 
@@ -26,13 +15,10 @@ class Solution:
             graph[ch]
             indegree[ch]
 
-        if len(words) == 1:
-            return ''.join(set(words[0]))
-
         for i, lhs in enumerate(words):
             for j in range(i+1, len(words)):
                 rhs = words[j]
-                if not self.analyze(lhs, rhs, graph, indegree):
+                if not self._analyze(lhs, rhs, graph, indegree):
                     return ''
         
         q = SimpleQueue()
@@ -41,9 +27,6 @@ class Solution:
             if cnt != 0:
                 continue
             q.put(ch)
-        
-        print(graph)
-        print(indegree)
         
         answer = []
         while not q.empty():
@@ -56,12 +39,34 @@ class Solution:
                 indegree[adj] -= { ch }
                 if len(indegree[adj]) == 0:
                     q.put(adj)
+
         if any(it for it in indegree.values()):
-            return ''  # Cycle detected
+            return ''  # Cycle between characters detected
 
         return ''.join(answer)
 
+    def _analyze(
+        self,
+        lhs: str, rhs: str,
+        graph: Dict[str, Set[str]], indegree: Dict[str, Set[str]]
+    ):
+        """
+        Return true if no problem
+        Otherwise, it is not sorted properly.
+        """
+        n = min(len(lhs), len(rhs))
 
+        for i in range(n):
+            it = lhs[i]
+            jt = rhs[i]
+            if it == jt:
+                graph[it]
+                continue
+            graph[it].add(jt)
+            indegree[jt].add(it)
+            return True
         
-
+        # If the prefix is same, the latter should be longer
+        return len(lhs) <= len(rhs)
+                
 
