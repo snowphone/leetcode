@@ -1,15 +1,13 @@
 class Solution:
     def kthGrammar(self, n: int, k: int) -> int:
-        def func(n, k) -> bool:
-            if n == 1:
+        def func(length, k) -> bool:
+            if length == 1:
                 return False
             
-            length = 2 ** (n - 1)
-            
             if k <= length / 2:
-                return self.kthGrammar(n-1, k)
+                return func(length // 2, k)
             else:
-                return not self.kthGrammar(n-1, k - length // 2)
+                return not func(length // 2, k - length // 2)
         
-        return int(func(n, k))
+        return int(func(2 ** (n - 1), k))
         
