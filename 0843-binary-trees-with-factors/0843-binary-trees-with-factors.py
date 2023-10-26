@@ -10,7 +10,7 @@ class Solution:
             if idx == 0:
                 return 1
             n = arr[idx]
-            answer = 1
+            answer = 1  # Myself
             indices = set()
             for i in range(idx):
                 it = arr[i]
@@ -23,6 +23,7 @@ class Solution:
                 indices.add( (i, j) )
             
             for i, j in indices:
+                # Append combinations of posssible children
                 answer += (fn(i) * fn(j))
 
             return answer % (10 ** 9 + 7)
