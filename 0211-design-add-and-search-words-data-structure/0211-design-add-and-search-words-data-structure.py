@@ -5,22 +5,29 @@ class Trie:
         return
     
     def add(self, word: str):
-        nd = self.root
+        self._add(word, self.root)
+        return 
+
+    def _add(self, word: str, root: dict):
+        nd = root
         for ch in word:
             nd = nd.setdefault(ch, dict())
         nd[self.TERMINAL] = self.TERMINAL
         return 
 
-    def search(self, word: str):
-        nd = self.root
-        for ch in word:
+    def _search(self, word: str, root: dict):
+        nd = root
+        for i, ch in enumerate(word):
+            if ch == '.':
+                subword = word[i+1:]
+                return any(self._search(subword, v) for v in nd.values() if v != self.TERMINAL)
             if ch not in nd:
                 return False
             nd = nd[ch]
         return self.TERMINAL in nd
     
     def __contains__(self, word: str):
-        return self.search(word)
+        return self._search(word, self.root)
 
 class WordDictionary:
     def __init__(self):
@@ -30,19 +37,6 @@ class WordDictionary:
         self.items.add(word)
 
     def search(self, word: str) -> bool:
-        alphabet = 'abcdefghijklmnopqrstuvwxyz'
-        cnt = word.count('.')
-        if cnt == 1:
-            return any(
-                word.replace('.', ch) in self.items
-                for ch in alphabet
-            )
-        if cnt == 2:
-            return any(
-                word.replace('.', ch, 1).replace('.', dh) in self.items
-                for ch in alphabet 
-                for dh in alphabet
-            )
         return word in self.items
         
 
