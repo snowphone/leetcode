@@ -1,8 +1,30 @@
-from sortedcontainers import SortedSet
+class Trie:
+    TERMINAL = object()
+    def __init__(self):
+        self.root = dict()
+        return
+    
+    def add(self, word: str):
+        nd = self.root
+        for ch in word:
+            nd = nd.setdefault(ch, dict())
+        nd[self.TERMINAL] = self.TERMINAL
+        return 
+
+    def search(self, word: str):
+        nd = self.root
+        for ch in word:
+            if ch not in nd:
+                return False
+            nd = nd[ch]
+        return self.TERMINAL in nd
+    
+    def __contains__(self, word: str):
+        return self.search(word)
 
 class WordDictionary:
     def __init__(self):
-        self.items = SortedSet()
+        self.items = Trie()
 
     def addWord(self, word: str) -> None:
         self.items.add(word)
