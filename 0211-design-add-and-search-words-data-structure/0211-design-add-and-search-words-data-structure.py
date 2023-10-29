@@ -1,5 +1,5 @@
 class Trie:
-    TERMINAL = object()
+    TERMINAL = '$'
     def __init__(self):
         self.root = dict()
         return
