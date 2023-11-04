@@ -1,10 +1,13 @@
 class Solution:
     def getLastMoment(self, n: int, left: List[int], right: List[int]) -> int:
-        cnt = len(left) + len(right)
-        t = 0
+        """
+        Actually, I don't have to differenciate each ant, so I cannot tell
+        1) ants meet and change others from 2) ants meet and go the same direction.
+        """
 
-        if left and right:
-            return max( max(left), n - min(right) )
-        elif left:
-            return max(left)
-        return n - min(right)
+        answer = []
+        if left:
+            answer.append(  max(left) )
+        if right:
+            answer.append(  n - min(right)  )
+        return max(answer)
