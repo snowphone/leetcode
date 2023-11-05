@@ -1,19 +1,18 @@
-from heapq import heappush
-
-
-class PQ(list):
+class PQ:
     "maxheap"
+    def __init__(self):
+        self.max = -987654321
 
     def put(self, it):
-        heappush(self, -it)
+        self.max = max(self.max, it)
 
     def peek(self):
-        return -self[0]
+        return self.max
 
 
 class Solution:
     def getWinner(self, arr: List[int], k: int) -> int:
-        "Time complexity: n log(n)"
+        "Time complexity: O(n)"
 
         if arr[0] == max(arr[: k + 1]):
             return arr[0]
@@ -38,3 +37,5 @@ class Solution:
             # if arr[i] == max(arr[i:e]):
             if arr[i] == window.peek():
                 return arr[i]
+
+        raise RuntimeError("Dead end")
