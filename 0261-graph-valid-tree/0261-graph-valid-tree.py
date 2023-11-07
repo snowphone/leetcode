@@ -23,11 +23,4 @@ class Solution:
                     return None
             return visited
         
-        for i in range(n):
-            tmp = dfs(None, i, {i})
-            if tmp is None:
-                continue
-            if len(tmp) == n:
-                return True
-            return False
-            
+        return (it := dfs(None, 0, {0}) ) is not None and len(it) == n
