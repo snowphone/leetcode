@@ -1,9 +1,9 @@
-from bisect import bisect_left
-
 class Trie:
-    TERMINAL = '$'
-    def __init__(self):
+    TERMINAL = "$"
+
+    def __init__(self, needle):
         self.root = dict()
+        self.needle = needle
 
     def add(self, word):
         nd = self.root
@@ -11,28 +11,32 @@ class Trie:
             nd = nd.setdefault(ch, {})
         nd[self.TERMINAL] = True
         return
-    
-    def find(self, word):
+
+    def find_all(self, beg):
+        answer = []
         nd = self.root
-        for ch in word:
+        for i in range(beg, len(self.needle)):
+            ch = self.needle[i]
+
+            if self.TERMINAL in nd:
+                answer.append([beg, i - 1])
             if ch not in nd:
-                return False
+                return answer
             nd = nd[ch]
 
-        return nd.get(self.TERMINAL) == True
+        if self.TERMINAL in nd:
+            answer.append([beg, len(self.needle) - 1])
+        return answer
 
 
 class Solution:
     def indexPairs(self, text: str, words: List[str]) -> List[List[int]]:
-        trie = Trie()
+        trie = Trie(text)
         for word in words:
             trie.add(word)
-        
-        n = len(text)
-        return [
-            [i, j]
-            for i in range(n)
-            for j in range(i, n)
-            if trie.find( text[i:j+1] )
-        ]
 
+        n = len(text)
+        answer = []
+        for i in range(n):
+            answer += trie.find_all(i)
+        return answer
