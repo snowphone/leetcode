@@ -2,9 +2,7 @@ class Solution:
     def countPrimes(self, n: int) -> int:
         if n <= 2:
             return 0
-        nums = [True] * n
-        nums[0] = False
-        nums[1] = False
+        nums = [False, False] + [True] * (n-2)
 
         for i, it in enumerate(nums):
             if not it:
@@ -15,6 +13,6 @@ class Solution:
                 nums[idx] = False
                 idx += i
         
-        return nums.count(True)
+        return sum(nums)
 
         
