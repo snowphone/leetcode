@@ -1,3 +1,8 @@
+from itertools import chain, zip_longest
 class Solution:
     def arrayStringsAreEqual(self, word1: List[str], word2: List[str]) -> bool:
-        return ''.join(word1) == ''.join(word2)
+        return all(
+            lhs == rhs for lhs, rhs in zip_longest(
+                chain(*word1), chain(*word2)
+            )
+        )
