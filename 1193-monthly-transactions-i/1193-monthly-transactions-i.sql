@@ -27,4 +27,8 @@ select
     t.amount as trans_total_amount,
     coalesce(a.amount, 0) as approved_total_amount
 from total as t
-left outer join appr as a on t.month = a.month and (t.country = a.country or t.country is null and a.country is null)
+left outer join appr as a on
+    t.month = a.month and (
+        t.country = a.country or 
+        (t.country is null and a.country is null )
+    )
