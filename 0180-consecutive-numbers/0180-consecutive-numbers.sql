@@ -2,8 +2,5 @@
 
 select distinct l.num as ConsecutiveNums
 from Logs as l
-where l.num = (
-    select m.num from Logs m where m.id = l.id + 1
-) and l.num = (
-    select n.num from Logs n where n.id = l.id + 2
-)
+join Logs m on l.id + 1 = m.id and l.num = m.num
+join Logs n on l.id + 2 = n.id and l.num = n.num
