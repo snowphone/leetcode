@@ -3,4 +3,4 @@
 
 select *
 from Patients p
-where p.conditions regexp '^DIAB1| DIAB1'
+where p.conditions regexp '\\bDIAB1'
