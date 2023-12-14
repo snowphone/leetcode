@@ -1,13 +1,15 @@
-# Write your MySQL query statement below
+-- Write your PostgreSQL query statement below
 
-SELECT
+select
     d.name as Department,
     e.name as Employee,
     e.salary as Salary
-FROM Department d
-JOIN Employee e ON d.id = e.departmentId
-WHERE (
-    SELECT COUNT(DISTINCT e2.salary)
-    FROM Employee e2
-    WHERE e2.departmentId = d.id AND e2.salary >= e.salary
-) <= 3;
+from Department d
+join Employee e on d.id = e.departmentId
+    and e.salary in (
+        select distinct e2.salary
+        from Employee e2
+        where e2.departmentId = d.id
+        order by e2.salary desc
+        limit 3
+    )
