@@ -5,14 +5,12 @@ class Solution:
         prev = (0, 0)
         for it in path:
             x, y = prev
-            if it == 'N':
-                new = (x, y+1)
-            elif it == 'S':
-                new = (x, y-1)
-            elif it == 'W':
-                new = (x-1, y)
-            elif it == 'E':
-                new = (x+1, y)
+            match it:
+                case 'N': new = (x, y+1)
+                case 'S': new = (x, y-1)
+                case 'W': new = (x-1, y)
+                case 'E':  new = (x+1, y)
+                case _: raise RuntimeError()
             
             if new in visited:
                 return True
