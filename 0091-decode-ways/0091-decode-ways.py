@@ -13,4 +13,3 @@ class Solution:
             return self.numDecodings(s[1:]) + self.numDecodings(s[2:])
         return self.numDecodings(s[1:])
 
-
