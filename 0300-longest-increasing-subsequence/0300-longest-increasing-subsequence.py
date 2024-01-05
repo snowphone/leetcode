@@ -1,17 +1,14 @@
 class Solution:
     def lengthOfLIS(self, nums: List[int]) -> int:
-        "O(n^2) algorithm"
         @cache
-        def fn(idx):
-            if idx == 0:
+        def fn(i: int):
+            if i == 0:
                 return 1
-            
-            it = nums[idx]
-            answer = 0
-            for i in range(idx):
-                if nums[i] >= it:
-                    continue
-                answer = max(answer, fn(i))
-            return answer + 1
+
+            return 1 + max(
+                (fn(j) for j, it in enumerate(nums[:i]) if it < nums[i]), default=0
+            )
         
-        return max(fn(i) for i in range(len(nums)))
+        return max(
+            fn(i) for i in range(len(nums))
+        )
