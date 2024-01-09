@@ -7,7 +7,7 @@
 class Solution:
     def leafSimilar(self, root1: Optional[TreeNode], root2: Optional[TreeNode]) -> bool:
 
-        def leaves(root, answer):
+        def leaves(root: TreeNode|None, answer: list):
             if root.left:
                 leaves(root.left, answer)
             if not root.left and not root.right:
