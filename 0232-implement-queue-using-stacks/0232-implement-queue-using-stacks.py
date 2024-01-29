@@ -6,18 +6,13 @@ class MyQueue:
         return
         
     def push(self, x: int) -> None:
-        self._move_to_right()
         self.stk.append(x)
         return
 
-    def _move_to_right(self):
-        while self.tmp:
-            self.stk.append(self.tmp.pop())
-        return
-
     def pop(self) -> int:
-        self._move_to_left()
-        return self.tmp.pop()
+        answer = self.peek()
+        self.tmp.pop()
+        return answer
 
     def _move_to_left(self):
         while self.stk:
@@ -25,7 +20,8 @@ class MyQueue:
         return
 
     def peek(self) -> int:
-        self._move_to_left()
+        if not self.tmp:
+            self._move_to_left()
         return self.tmp[-1]
         
     def empty(self) -> bool:
