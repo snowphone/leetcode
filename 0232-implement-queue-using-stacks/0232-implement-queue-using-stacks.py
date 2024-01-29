@@ -1,37 +1,35 @@
 class MyQueue:
 
     def __init__(self):
+        self.tmp = []
         self.stk = []
+        return
         
-
     def push(self, x: int) -> None:
+        self._move_to_right()
         self.stk.append(x)
-        
+        return
+
+    def _move_to_right(self):
+        while self.tmp:
+            self.stk.append(self.tmp.pop())
+        return
 
     def pop(self) -> int:
-        tmp = []
+        self._move_to_left()
+        return self.tmp.pop()
+
+    def _move_to_left(self):
         while self.stk:
-            tmp.append(self.stk.pop())
-        answer = tmp.pop()
-        while tmp:
-            self.stk.append(tmp.pop())
-        
-        return answer
-        
+            self.tmp.append(self.stk.pop())
+        return
 
     def peek(self) -> int:
-        tmp = []
-        while self.stk:
-            tmp.append(self.stk.pop())
-        answer = tmp[-1]
-        while tmp:
-            self.stk.append(tmp.pop())
+        self._move_to_left()
+        return self.tmp[-1]
         
-        return answer
-        
-
     def empty(self) -> bool:
-        return not self.stk
+        return not self.stk and not self.tmp
         
 
 
