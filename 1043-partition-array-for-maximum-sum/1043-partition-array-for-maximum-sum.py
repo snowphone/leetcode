@@ -6,14 +6,17 @@ class Solution:
             """
             Return an answer for range of [0,i] indices.
             """
-            if i == 0: return arr[0] if k else 0
+            if i == 0:
+                return arr[0] if k else 0
 
             answer = 0
             sz = i+1
+            max_elem = arr[i]
             for kk in range(1, min(sz, k)+1):
+                max_elem = max( max_elem, arr[sz - kk] )
                 answer = max(
                     answer,
-                    fn(i-kk) + max(arr[sz-kk:sz]) * kk,
+                    fn(i-kk) + max_elem * kk,
                 )
             return answer
 
