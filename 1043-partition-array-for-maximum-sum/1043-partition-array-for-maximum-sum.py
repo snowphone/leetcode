@@ -3,14 +3,17 @@ class Solution:
 
         @cache
         def fn(i: int):
-            if i < 0:  return 0
+            """
+            Return an answer for range of [0,i] indices.
+            """
             if i == 0: return arr[0] if k else 0
 
             answer = 0
-            for kk in range(1, min(i+1, k)+1):
+            sz = i+1
+            for kk in range(1, min(sz, k)+1):
                 answer = max(
                     answer,
-                    fn(i-kk) + max(arr[i-kk+1:i+1]) * kk,
+                    fn(i-kk) + max(arr[sz-kk:sz]) * kk,
                 )
             return answer
 
