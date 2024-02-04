@@ -9,9 +9,12 @@ class Solution:
             go forward
         while still valid substr:
             retreat
+
+        Time Complexity:
+            O(n * 52) = O(n) where n is the length of the string `s`
         """
-        tcnt = self._make_counter(t)
-        window = self._make_counter(None)
+        tcnt = Counter(t)
+        window = {ch: 0 for ch in self.ALPHABET}
 
         l = 0
         answer = None
@@ -39,14 +42,6 @@ class Solution:
 
     def _valid(self, tcnt: dict[str, int], window: dict[str, int]):
         return all(
-            tcnt[ch] <= window[ch]
-            for ch in self.ALPHABET
+            cnt <= window[ch]
+            for ch, cnt in tcnt.items()
         )
-        
-    def _make_counter(self, obj: str|None):
-        cnt = {ch: 0 for ch in self.ALPHABET}
-
-        if obj and isinstance(obj, str):
-            for ch in obj:
-                cnt[ch] += 1
-        return cnt
