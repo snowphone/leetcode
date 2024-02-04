@@ -11,7 +11,7 @@ class Solution:
             retreat
 
         Time Complexity:
-            O(n * 52) = O(n) where n is the length of the string `s`
+             O(m + n) where m is the length of the string `s` and n is the length of the string `t`
         """
         tcnt = Counter(t)
         window = {ch: 0 for ch in self.ALPHABET}
