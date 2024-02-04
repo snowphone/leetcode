@@ -20,17 +20,21 @@ class Solution:
 
             while self._valid(tcnt, window):
                 if answer is None:
-                    answer = s[l:r+1]
+                    answer = (l, r)
                 else:
                     answer = min(
                         answer,
-                        s[l:r+1],
-                        key=len,
+                        (l, r),
+                        key=lambda it: it[1] - it[0] + 1,
                     )
                 window[s[l]] -= 1
                 l += 1
                 
-        return answer if answer is not None else ''
+        if answer:
+            l, r = answer
+            return s[l:r+1]
+        else:
+            return ""
 
 
     def _valid(self, tcnt: dict[str, int], window: dict[str, int]):
