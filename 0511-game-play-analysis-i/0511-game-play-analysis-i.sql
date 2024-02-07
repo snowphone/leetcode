@@ -1,5 +1,5 @@
-# Write your MySQL query statement below
+-- Write your PostgreSQL query statement below
 
-select a.player_id, min(a.event_date) as first_login
+select player_id, min(event_date) as first_login
 from Activity as a
 group by a.player_id
