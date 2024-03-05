@@ -6,7 +6,6 @@ class Solution:
         i = 0
         j = n-1
         while i < j:
-            print(group[i], group[j])
             if group[i][0] == group[j][0]:
                 i+=1
                 j-=1
