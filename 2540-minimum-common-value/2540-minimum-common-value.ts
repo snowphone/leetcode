@@ -1,5 +1,5 @@
 function getCommon(nums1: number[], nums2: number[]): number {
-	const cmp = (i: number, j: number) => {
+	return ((i: number, j: number) => {
 		if (i == nums1.length || j == nums2.length) {
 			return -1
 		}
@@ -11,7 +11,6 @@ function getCommon(nums1: number[], nums2: number[]): number {
 			return cmp(i, j + 1)
 		}
 		return lhs
-	}
+	})(0, 0)
 
-	return cmp(0, 0)
 };
