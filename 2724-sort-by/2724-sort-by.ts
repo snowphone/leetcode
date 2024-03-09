@@ -4,5 +4,5 @@ type Fn = (value: JSONValue) => number
 function sortBy(arr: JSONValue[], fn: Fn): JSONValue[] {
 	return _(arr)
 	.sortBy(fn)
-	.commit()
+	.value()
 };
