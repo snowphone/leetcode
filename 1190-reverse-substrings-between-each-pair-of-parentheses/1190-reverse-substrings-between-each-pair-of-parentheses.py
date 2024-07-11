@@ -1,16 +1,27 @@
 class Solution:
     def reverseParentheses(self, s: str) -> str:
-        sz = len(s)
+        portal = dict()
+
+        # Discover and create a portal
         stk = []
+        for i, ch in enumerate(s):
+            if ch == '(':
+                stk.append(i)
+            elif ch == ')':
+                j = stk.pop()
+                portal[i] = j
+                portal[j] = i
+        
+        idx, step = 0, 1
 
-        for ch in s:
-            stk.append(ch)
-
-            if ch != ')':
-                continue
-            sz = len(stk)
-            i = next(i for i in range(sz-1, -1, -1) if stk[i] == '(')    
-            chunk = stk[i+1:-1]  # parentheses not included
-            stk = stk[:i] + chunk[::-1]
-
-        return ''.join(stk)
+        answer = []
+        for _ in s:
+            if idx in portal:
+                idx = portal[idx]
+                step *= -1
+            else:
+                answer.append(s[idx])
+            
+            idx += step
+        return ''.join(answer)
+                
