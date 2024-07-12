@@ -1,11 +1,27 @@
 class Solution:
-    @cache
     def maximumGain(self, s: str, x: int, y: int) -> int:
-        sz = len(s)
+        if x > y:
+            pattern1, point1 = 'ab', x
+            pattern2, point2 = 'ba', y
+        else:
+            pattern1, point1 = 'ba', y
+            pattern2, point2 = 'ab', x
+
+        stk = ['']
         answer = 0
-        for i in range(sz-1):
-            if s[i:i+2] == 'ab':
-                answer = max(answer, x + self.maximumGain(s[:i] + s[i+2:], x, y) )
-            if s[i:i+2] == 'ba':
-                answer = max(answer, y + self.maximumGain(s[:i] + s[i+2:], x, y) )
+        for ch in s:
+            if stk[-1] + ch == pattern1:
+                answer += point1
+                stk.pop()
+            else:
+                stk.append(ch)
+        
+        stk, s = [''], ''.join(stk)
+        for ch in s:
+            if stk[-1] + ch == pattern2:
+                answer += point2
+                stk.pop()
+            else:
+                stk.append(ch)
+                
         return answer
