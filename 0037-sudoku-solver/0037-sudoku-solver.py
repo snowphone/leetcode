@@ -32,14 +32,14 @@ class Solution:
         row_nums = set(int(board[r][j]) for j in range(9) if board[r][j] != ".")
         col_nums = set(int(board[i][c]) for i in range(9) if board[i][c] != ".")
 
-        return list((N - submatrix_nums) & (N - row_nums) & (N - col_nums))
+        return (N - submatrix_nums) & (N - row_nums) & (N - col_nums)
 
     def _try(self, board, remaining_cells):
         if not remaining_cells:
             return True
         r, c = remaining_cells.pop()
 
-        candidates = self._get_available_nums(board, r, c)[::-1]
+        candidates = self._get_available_nums(board, r, c)
         for candidate_num in candidates:
             board[r][c] = str(candidate_num)
             if self._try(board, remaining_cells):
