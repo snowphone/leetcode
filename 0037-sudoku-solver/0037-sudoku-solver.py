@@ -1,17 +1,31 @@
 class Solution:
 
-    def _get_empties(self, board):
-        return [(i, j) for i in range(9) for j in range(9) if board[i][j] == "."]
-
     def solveSudoku(self, board: List[List[str]]) -> None:
         """
         Do not return anything, modify board in-place instead.
         """
-        remaining_cells = self._get_empties(board)
-        remaining_cells.sort(key=lambda it: (it[0]//3, it[1]//3))
+        remaining_cells = self._get_empty_cells(board)
 
         self._try(board, remaining_cells)
         return
+
+    def _get_empty_cells(self, board):
+        return [(i, j) for i in range(9) for j in range(9) if board[i][j] == "."]
+
+    def _try(self, board, remaining_cells):
+        if not remaining_cells:
+            return True
+        r, c = remaining_cells.pop()
+
+        candidates = self._get_available_nums(board, r, c)
+        for candidate_num in candidates:
+            board[r][c] = str(candidate_num)
+            if self._try(board, remaining_cells):
+                return True
+
+        board[r][c] = "."
+        remaining_cells.append((r, c))
+        return False
 
     def _get_group_upper_left(self, r, c):
         """
@@ -33,18 +47,3 @@ class Solution:
         col_nums = set(int(board[i][c]) for i in range(9) if board[i][c] != ".")
 
         return (N - submatrix_nums) & (N - row_nums) & (N - col_nums)
-
-    def _try(self, board, remaining_cells):
-        if not remaining_cells:
-            return True
-        r, c = remaining_cells.pop()
-
-        candidates = self._get_available_nums(board, r, c)
-        for candidate_num in candidates:
-            board[r][c] = str(candidate_num)
-            if self._try(board, remaining_cells):
-                return True
-
-        board[r][c] = "."
-        remaining_cells.append((r, c))
-        return False
