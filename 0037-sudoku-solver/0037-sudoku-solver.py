@@ -5,6 +5,7 @@ class Solution:
         Do not return anything, modify board in-place instead.
         """
         remaining_cells = self._get_empty_cells(board)
+        remaining_cells.sort(key=lambda it: (it[0]//3, it[1]//3))
 
         self._try(board, remaining_cells)
         return
