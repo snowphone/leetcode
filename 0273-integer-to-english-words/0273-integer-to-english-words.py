@@ -1,8 +1,14 @@
 class Solution:
-    @cache
     def numberToWords(self, num: int) -> str:
-        if num <= 19:
-            return {
+        words = self._solve(num)
+        while len(words) > 1 and words[-1] == 'Zero':
+            words.pop()
+        return ' '.join(words)
+    
+    def _solve(self, num) -> list[str]:
+        if num < 20:
+            return [
+                {
                 0: "Zero",
                 1: "One",
                 2: "Two",
@@ -23,44 +29,32 @@ class Solution:
                 17: "Seventeen",
                 18: "Eighteen",
                 19: "Nineteen",
-            }[num]
-    
-        if num < 100:
-            tens = {
-                2: "Twenty",
-                3: "Thirty",
-                4: "Forty",
-                5: "Fifty",
-                6: "Sixty",
-                7: "Seventy",
-                8: "Eighty",
-                9: "Ninety",
-            }
-            answer = tens[num // 10]
-            remaining = num % 10
-            if remaining == 0:
-                return answer
-            return f"{answer} {self.numberToWords(remaining)}"
-    
-        max_separator = {
-            3: "Hundred",
-            4: "Thousand",
-            7: "Million",
-            10: "Billion",
-            13: "Trillion",
-            17: "Quadrillion",
+                }[num]
+            ]
+        elif num < 100:
+            return [
+                {
+                    2: "Twenty",
+                    3: "Thirty",
+                    4: "Forty",
+                    5: "Fifty",
+                    6: "Sixty",
+                    7: "Seventy",
+                    8: "Eighty",
+                    9: "Ninety",
+                } [num // 10],
+                *self._solve(num % 10),
+            ]
+        mapping = {
+            100: "Hundred",
+            1_000: "Thousand",
+            1_000_000: "Million",
+            1_000_000_000: "Billion",
+            1_000_000_000_000: "Trillion",
         }
-        most_significant_digit_len = max(
-            it for it in max_separator.keys() if it <= len(str(num))
-        )
-        mult = 10 ** (most_significant_digit_len - 1)
-    
-        max_digit = num // mult
-        answer = (
-            f"{self.numberToWords(max_digit)} {max_separator[most_significant_digit_len]}"
-        )
-        remaining = num % mult
-        if remaining == 0:
-            return answer
-        return f"{answer} {self.numberToWords(remaining)}"
-    
+        max_n, word = next( (n, w) for n, w in reversed( mapping.items() ) if n <= num )
+        return [
+            self.numberToWords(num // max_n),
+            word,
+            self.numberToWords(num % max_n),
+        ]
