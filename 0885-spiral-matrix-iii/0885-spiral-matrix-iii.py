@@ -1,4 +1,12 @@
 class Delta:
+    """
+    이동 방향은 그 위치에 숫자를 적을 수 있는지 없는지와는
+    무관하게 아래의 규칙에 따라서 움직인다.
+    R D
+    L L U U
+    R R R D D D
+    L L L L U U U U
+    """
     directions = [
         (0, 1),  # Right
         (1, 0),  # Down
@@ -8,7 +16,7 @@ class Delta:
 
     def __init__(self):
         self.direction = self.directions[0]
-        self.same_direction_cnt = 0  # invariant: cnt < limit
+        self.same_direction_cnt = -1  # invariant: cnt < limit
         self.same_direction_limit = 1
         self.limit_cnt = 1
         return
@@ -47,9 +55,9 @@ class Solution:
                 answer.append([r, c])
                 i += 1
 
-            dr, dc = delta.direction
+            dr, dc = delta.next()
             r += dr
             c += dc
-            delta.next()
+            #delta.next()
 
         return answer
