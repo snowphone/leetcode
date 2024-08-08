@@ -58,6 +58,5 @@ class Solution:
             dr, dc = delta.next()
             r += dr
             c += dc
-            #delta.next()
 
         return answer
