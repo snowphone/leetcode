@@ -1,4 +1,4 @@
-<h2><a href="https://leetcode.com/problems/spiral-matrix-iii">885. Spiral Matrix III</a></h2><h3>Medium</h3><hr><p>You start at the cell <code>(rStart, cStart)</code> of an <code>rows x cols</code> grid facing east. The northwest corner is at the first row and column in the grid, and the southeast corner is at the last row and column.</p>
+<h2><a href="https://leetcode.com/problems/spiral-matrix-iii/?envType=daily-question&envId=2024-08-08">885. Spiral Matrix III</a></h2><h3>Medium</h3><hr><p>You start at the cell <code>(rStart, cStart)</code> of an <code>rows x cols</code> grid facing east. The northwest corner is at the first row and column in the grid, and the southeast corner is at the last row and column.</p>
 
 <p>You will walk in a clockwise spiral shape to visit every position in this grid. Whenever you move outside the grid&#39;s boundary, we continue our walk outside the grid (but may return to the grid boundary later.). Eventually, we reach all <code>rows * cols</code> spaces of the grid.</p>
 
