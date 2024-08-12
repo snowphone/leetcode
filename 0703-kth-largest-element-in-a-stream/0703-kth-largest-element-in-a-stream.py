@@ -1,19 +1,30 @@
-from sortedcontainers import SortedList
+from heapq import heappush, heappop
+
+class PQ(list):
+    def __init__(self):
+        super().__init__()
+        return
+    def put(self, item):
+        return heappush(self, item)
+    def get(self):
+        return heappop(self)
+    def peek(self):
+        return self[0]
 
 class KthLargest:
     def __init__(self, k: int, nums: List[int]):
-        self.q = SortedList()
+        self.q = PQ()
         self.k = k
         for it in nums:
-            self.q.add(it)
+            self.q.put(it)
 
             while len(self.q) > k:
-                self.q.pop(0)
+                self.q.get()
 
     def add(self, val: int) -> int:
-        self.q.add(val)
+        self.q.put(val)
         while len(self.q) > self.k:
-            self.q.pop(0)
+            self.q.get()
         return self.q[0]
 
 
