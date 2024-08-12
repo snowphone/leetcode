@@ -25,7 +25,7 @@ class KthLargest:
         self.q.put(val)
         while len(self.q) > self.k:
             self.q.get()
-        return self.q[0]
+        return self.q.peek()
 
 
 # Your KthLargest object will be instantiated and called as such:
