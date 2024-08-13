@@ -1,29 +1,28 @@
 class Solution:
     def combinationSum2(self, candidates: List[int], target: int) -> List[List[int]]:
         candidates.sort()
+        n = len(candidates)
 
-        @cache
         def fn(idx, target):
             if target < 0:
                 return []
-            if idx == len(candidates):
+            if target == 0:
+                return [ [] ]
+            if idx == n:
                 return []
 
             me = candidates[idx]
-            if target == me:
-                return [ (me, ) ]
-            
-            answer = []
 
-            for i in range(idx):
-                subanswer = fn(i, target - me)
+            ans = []
 
-                for it in subanswer:
-                    answer.append(tuple([*it, me]))
+            for it in fn(idx+1, target - me): # Use myself
+                it.append(me)
+                ans.append(it)
 
-            return answer
+            next_idx = next((i for i in range(idx+1, n) if candidates[i] != candidates[idx]), n)    
+            for it in fn(next_idx, target):  # Not use myself
+                ans.append(it)
 
-        answer = set()
-        for i in range(len(candidates)):
-            answer |= set(fn(i, target))
-        return list(answer)
+            return ans
+
+        return fn(0, target)
