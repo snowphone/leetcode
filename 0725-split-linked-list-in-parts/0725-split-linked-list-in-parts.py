@@ -4,35 +4,38 @@
 #         self.val = val
 #         self.next = next
 class Solution:
-    def len(self, head: Optional[ListNode]) -> int:
-        cnt = 0
+    def _len(self, head):
+        sz = 0
         while head:
-            cnt += 1
+            sz += 1
             head = head.next
-        return cnt
+        return sz
     
-    def take(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
-        dummy = ListNode(0, head)
-        tail = dummy
+    def _calc_target_lengths(self, list_size: int, chunk_size: int):
+        target_lengths = [list_size // chunk_size for _ in range(chunk_size)]
+        for i in range(list_size - ( (list_size // chunk_size) * chunk_size) ):
+            target_lengths[i] += 1
 
+        return target_lengths
+    
+    def _take(self, head, n):
+        dummy = ListNode(None, head)
+        tail = dummy
         for _ in range(n):
             tail = tail.next
 
-        next_head = tail.next
+        new_head = tail.next
         tail.next = None
 
-        return dummy.next, next_head
+        return dummy.next, new_head
 
     def splitListToParts(self, head: Optional[ListNode], k: int) -> List[Optional[ListNode]]:
-        sz = self.len(head)
-        answer = [None for _ in range(k)]
-        remaining = sz % k
-
-        for i in range(k):
-            length = sz // k
-            if remaining:
-                length += 1
-                remaining -= 1
-            answer[i], head = self.take(head, length)
-
+        sz = self._len(head)
+        target_lengths = self._calc_target_lengths(sz, k)
+        
+        answer = []
+        for chunk in target_lengths:
+            it, head = self._take(head, chunk)
+            answer.append(it)
+        
         return answer
