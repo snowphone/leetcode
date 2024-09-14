@@ -1,8 +1,14 @@
 class Solution:
     def longestSubarray(self, nums: List[int]) -> int:
         chunks = self._make_chunks(nums)
-        m = max(chunks, key=lambda it: it[0])[0]
-        return max((it for it in chunks if it[0] == m), key=lambda it: it[1])[1]
+        maxima, maxima_cnt = 0, 0
+        print(chunks)
+        for k, cnt in chunks:
+            if k > maxima:
+                maxima, maxima_cnt = k, cnt
+            elif k == maxima:
+                maxima_cnt = max(cnt, maxima_cnt)
+        return maxima_cnt
 
     def _make_chunks(self, nums: list[int]):
         answer = []
