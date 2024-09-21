@@ -11,7 +11,7 @@ class Solution {
         return answer
     }
 
-    private fun generate(prefix: String, limit: Int, answer: MutableList<Int>) {
+    private tailrec fun generate(prefix: String, limit: Int, answer: MutableList<Int>) {
         for (i in 0..9) {
             val candidate = "${prefix}${i}"
             val candidate_num = candidate.toInt()
