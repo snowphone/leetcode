@@ -11,13 +11,15 @@
 #         self.right = right
 class Solution:
     def isSubPath(self, head: Optional[ListNode], root: Optional[TreeNode]) -> bool:
-        for it in self._find_all(root, head.val):
-            print("TRY")
-            if self._equals(head, it):
-                return True
-        return False
+        return next(
+            (
+                True
+                for it in self._find_all(root, head.val)
+                if self._equals(head, it)
+            ), False
+        )
         
-    def _equals(self, head, root):
+    def _equals(self, head: ListNode|None, root: TreeNode|None):
         if not head:
             return True
         if head and not root:
