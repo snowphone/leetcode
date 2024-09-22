@@ -1,18 +1,18 @@
 class Solution:
     def lexicalOrder(self, n: int) -> List[int]:
-        answer = []
+        return list(self._solve(n))
 
+    def _solve(self, n: int):
         for i in range(1, 10):
             if i <= n:
-                answer.append(i)
-                self._generate(str(i), n, answer)
-        return answer
-    
-    def _generate(self, prefix: str, limit: int, answer: list[int]):
+                yield i
+                yield from self._generate(str(i), n)
+
+    def _generate(self, prefix: str, limit: int):
         for i in range(0, 10):
             candidate = f"{prefix}{i}"
             candidate_num = int(candidate)
             if candidate_num <= limit:
-                answer.append(candidate_num)
-                self._generate(candidate, limit, answer)
+                yield candidate_num
+                yield from self._generate(candidate, limit)
         return
