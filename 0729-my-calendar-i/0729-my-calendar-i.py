@@ -2,7 +2,7 @@ from bisect import bisect_left
 
 class MyCalendar:
     def __init__(self):
-        self.arr = []
+        self.arr = []  # Using sorted set would make the time faster.
         
     def book(self, start: int, end: int) -> bool:
         last = end - 1  # To make [start, last]
