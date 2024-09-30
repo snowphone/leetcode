@@ -1,23 +1,32 @@
+from dataclasses import dataclass
+
+@dataclass
+class Entry:
+    value: int
+    inc: int = 0
+
 class CustomStack:
 
     def __init__(self, maxSize: int):
         self.max = maxSize
-        self.stk = []
+        self.stk: list[Entry] = []
 
     def push(self, x: int) -> None:
         if len(self.stk) == self.max:
             return
-        self.stk.append(x)
+        self.stk.append(Entry(value=x))
 
     def pop(self) -> int:
         if not self.stk:
             return -1
-        return self.stk.pop()
+        entry = self.stk.pop()
+        if self.stk:
+            self.stk[-1].inc += entry.inc
+        return entry.value + entry.inc
 
     def increment(self, k: int, val: int) -> None:
         end = min(k, len(self.stk))
-        for i in range(0, end):
-            self.stk[i] += val
+        self.stk[end-1].inc += val
 
 
 # Your CustomStack object will be instantiated and called as such:
