@@ -26,6 +26,8 @@ class CustomStack:
 
     def increment(self, k: int, val: int) -> None:
         end = min(k, len(self.stk))
+        if not end:
+            return
         self.stk[end-1].inc += val
 
 
