@@ -13,7 +13,6 @@ class Solution:
             it = next(iter(counter.keys()))
             pop(it)
             target  = indexer(k - it)
-            print(it, target)
             if target not in counter:
                 return False
             pop(target)
