@@ -3,21 +3,22 @@ class Solution:
         indexer = lambda x: (k + x % k) % k
         counter = Counter(map(indexer, arr))
 
-        def pop(it):
-            counter[it] -= 1
-            if not counter[it]:
-                del counter[it]
-            return
-
         while counter:
             it = next(iter(counter.keys()))
-            pop(it)
+
             target  = indexer(k - it)
             if target not in counter:
                 return False
-            pop(target)
+                
+            # Batch-compare
+            if it == 0:
+                if counter[it] & 1:
+                    return False
+            else:
+                if counter[it] != counter[target]:
+                    return False
+
+            for jt in {it, target}:
+                del counter[jt]
 
         return True
-        
-
-
