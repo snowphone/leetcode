@@ -8,10 +8,9 @@ class Solution:
         for i, it in enumerate(nums):
             idx1 = bisect_left(nums, lower - it)
             idx2 = bisect_right(nums, upper - it)
-            print(i, idx1, idx2)
-            tmp = idx2 - idx1
-            if idx1 <= i < idx2:
-                tmp -= 1
 
-            answer += tmp
+            if idx1 <= i < idx2:
+                answer += (idx2 - idx1 - 1)
+            else:
+                answer += (idx2 - idx1)
         return answer // 2
