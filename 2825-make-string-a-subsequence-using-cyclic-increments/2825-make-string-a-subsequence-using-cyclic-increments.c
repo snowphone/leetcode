@@ -13,11 +13,11 @@ bool canMakeSubsequence(char* str1, char* str2) {
     return *rit == '\0';
 }
 
-char increased(char ch) {
+inline char increased(char ch) {
     int idx = ch - 'a';
     return (idx + 1) % 26 + 'a';
 }
 
-bool similar(char lhs, char rhs) {
+inline bool similar(char lhs, char rhs) {
     return lhs == rhs || increased(lhs) == rhs;
 }
