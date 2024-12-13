@@ -14,7 +14,6 @@ class HQ:
 
 class Solution:
     def findScore(self, nums: List[int]) -> int:
-        marked = [False for _ in nums]
         q = HQ()
         for i, it in enumerate(nums):
             q.put((it, i))
