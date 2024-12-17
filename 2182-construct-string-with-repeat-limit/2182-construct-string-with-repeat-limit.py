@@ -1,28 +1,27 @@
 from collections import Counter
-from sortedcontainers import SortedDict
-
+from sortedcontainers import SortedList
 
 class Solution:
     def repeatLimitedString(self, s: str, repeatLimit: int) -> str:
-        q = SortedDict(Counter(s))
-
-        answer = [""]
+        q = SortedList()
+        for entry in Counter(s).items():
+            q.add(entry)
+        
+        answer = [ '' ]
         while q:
-            ch, cnt = q.peekitem(-1)
+            ch, cnt = q.pop()
             if cnt <= repeatLimit:
                 answer.append(ch * cnt)
-                q.popitem(-1)
-                continue
-            answer.append(ch * repeatLimit)
-            q[ch] -= repeatLimit
+            else:
+                answer.append(ch * repeatLimit )
+                remaining = cnt - repeatLimit
 
-            try:
-                nxt_ch, nxt_cnt = q.peekitem(-2)
+                if not q:
+                    break
+                nxt_ch, nxt_cnt = q.pop()
                 answer.append(nxt_ch)
-                q[nxt_ch] -= 1
-                if q[nxt_ch] == 0:
-                    del q[nxt_ch]
-            except:
-                break
+                if nxt_cnt - 1 > 0:
+                    q.add((nxt_ch, nxt_cnt - 1))
+                q.add((ch, remaining))
 
-        return "".join(answer)
+        return ''.join(answer)
