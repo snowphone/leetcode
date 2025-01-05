@@ -1,6 +1,6 @@
 class Solution:
     def shiftingLetters(self, s: str, shifts: List[List[int]]) -> str:
-        delta = [0 for _ in s]
+        delta = [0 for _ in range(len(s) + 1)]
 
         def tochr(i: int):
             base = ord("a")
@@ -10,8 +10,7 @@ class Solution:
             step = 1 if direction == 1 else -1
 
             delta[l] += step
-            if r + 1 < len(delta):
-                delta[r + 1] -= step
+            delta[r + 1] -= step
 
         for i in range(1, len(delta)):
             delta[i] += delta[i - 1]
