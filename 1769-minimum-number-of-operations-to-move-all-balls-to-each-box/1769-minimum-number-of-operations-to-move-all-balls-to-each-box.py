@@ -1,11 +1,12 @@
 class Solution:
     def minOperations(self, boxes: str) -> List[int]:
-        def calc(target: int):
-            cnt = 0
-            for i, ch in enumerate(boxes):
-                if ch == '1':
-                    cnt += abs(i - target)
-            return cnt
-        
-        return [ calc(i) for i, _ in enumerate(boxes) ]
-            
+        answer = [sum(i for i, ch in enumerate(boxes) if ch == "1")]
+        n = len(boxes)
+        lsum, rsum = int(boxes[0] == "1"), sum(ch == "1" for ch in boxes[1:])
+        for i in range(1, n):
+            answer.append(answer[-1] - rsum + lsum)
+
+            lsum += int(boxes[i] == "1")
+            rsum -= int(boxes[i] == "1")
+
+        return answer
