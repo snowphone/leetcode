@@ -22,7 +22,6 @@ class Trie:
             if ch not in nd:
                 return False
             nd = nd[ch]
-        print(word, nd)
         if self.terminal in nd:
             return nd[self.terminal] > 1 or len(nd.keys()) > 1
         return True
