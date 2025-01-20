@@ -1,16 +1,17 @@
-from sortedcontainers import SortedList
+from heapq import heappush, heappop
 
 
 class PQ:
     "Sorted in ascending order"
+
     def __init__(self):
-        self.q = SortedList()
+        self.q = []
 
     def put(self, item):
-        return self.q.add(item)
+        return heappush(self.q, item)
 
     def get(self):
-        return self.q.pop(0)
+        return heappop(self.q)
 
     def __bool__(self):
         return bool(self.q)
