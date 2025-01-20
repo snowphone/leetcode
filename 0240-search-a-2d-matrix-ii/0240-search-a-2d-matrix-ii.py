@@ -2,20 +2,25 @@ from bisect import bisect_left
 
 class Solution:
     def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
-        'Time Complexity: O( m + n )'
-        n_row = len(matrix)  # m
-        n_col = len(matrix[0])  # n
+        nrow = len(matrix)
+        ncol = len(matrix[0])
+        r, c = nrow-1, 0
 
-        r = 0
-        c = n_col - 1
-        while r < n_row and 0 <= c:
-            it = matrix[r][c]
-            print(it)
-            if it == target:
+        def get(r, c):
+            if r < 0:
+                return -987654321
+            if c >= ncol:
+                return 9876543221
+            return matrix[r][c]
+
+        while r >= 0 or c < ncol:
+            me = get(r, c)
+
+            if target == me:
                 return True
-            if it > target:
-                c -= 1
+            elif target > me:
+                c += 1
             else:
-                r += 1
+                r -= 1
         return False
-
+                
