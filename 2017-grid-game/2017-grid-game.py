@@ -11,7 +11,6 @@ class Solution:
         pf2 = calc_pf(grid[1])
         pf2.append(0)  # pf2[-1] == sum of [0, 0)
 
-        @cache
         def robot2_goes_down_at(i: int):
             return max(
                 (pf1[-1] - pf1[i]),  # Robot2 chooses row 0
