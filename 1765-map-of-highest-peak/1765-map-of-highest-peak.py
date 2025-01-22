@@ -4,30 +4,23 @@ from typing import Annotated
 # row, col, current height
 Entry = Annotated[tuple[int, int, int], ...]
 
-UNUSED = -1
-
 
 class Solution:
 
     def highestPeak(self, isWater: list[list[int]]) -> list[list[int]]:
+        UNUSED = -1
         nrow = len(isWater)
         ncol = len(isWater[0])
         matrix = [[UNUSED for _ in range(ncol)] for _ in range(nrow)]
 
-        qset = set[Entry]()
         q = SimpleQueue[Entry]()
 
         def put(item: Entry):
-            if item in qset:
-                return
-            qset.add(item)
             q.put(item)
             return
 
         def get():
-            item = q.get()
-            qset.remove(item)
-            return item
+            return q.get()
 
         for r in range(nrow):
             for c in range(ncol):
