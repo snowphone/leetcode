@@ -21,7 +21,10 @@ class Solution:
                     matrix[r][c] = 0
                     q.put((r, c, 0))
 
-        def get_adjacents(r: int, c: int):
+
+        while not q.empty():
+            r, c, h = q.get()
+
             for i, j in [(0, -1), (0, 1), (1, 0), (-1, 0)]:
                 adj_r = r + i
                 adj_c = c + j
@@ -32,12 +35,7 @@ class Solution:
                     matrix[adj_r][adj_c] != UNUSED
                 ):
                     continue
-                yield (adj_r, adj_c)
 
-        while not q.empty():
-            r, c, h = q.get()
-
-            for adj_r, adj_c in get_adjacents(r, c):
                 new_h = h + 1
                 matrix[adj_r][adj_c] = new_h
                 q.put((adj_r, adj_c, new_h))
