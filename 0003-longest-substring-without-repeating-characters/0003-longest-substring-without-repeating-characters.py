@@ -1,16 +1,16 @@
 class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
-        left = 0
-        bag = set()
+        index_map = {}
+        l = 0
         answer = 0
-        for right, ch in enumerate(s):
-            if ch in bag:
-                while left < right:
-                    ch2 = s[left]
-                    bag.remove(s[left])
-                    left += 1
-                    if ch2 == ch:
-                        break
-            bag.add(ch)
-            answer = max(answer, len(bag))
+
+        def repeating_chars():
+            return ch in index_map and index_map[ch] >= l
+
+        for r, ch in enumerate(s):
+            if repeating_chars():
+                idx = index_map[ch]
+                l = idx + 1
+            index_map[ch] = r
+            answer = max(answer, r - l + 1)
         return answer
