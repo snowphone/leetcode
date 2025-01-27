@@ -20,5 +20,8 @@ class Solution:
                 if prev_i < i and prev_j < j:
                     answer = min( answer, solve(idx-1, prev_swapped) + swapped )
             return answer
+
+        for i in range(n):  # Warm-up cache
+            solve(i, 0); solve(i, 1)
         
         return min(solve(n-1, 0), solve(n-1, 1))
