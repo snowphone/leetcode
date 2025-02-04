@@ -11,16 +11,15 @@ class Solution:
                 b, e = b + 1, e - 1
             return
 
-        try:
-            i = next(i - 1 for i in range(n - 1, 0, -1) if nums[i - 1] < nums[i])
-        except StopIteration:
-            reverse(0, n)
+        def try_swap(i: int):
+            if i == -1:
+                return
+            it = nums[i]
+            jt = min(jt for jt in nums[i + 1 :] if jt > it)
+            j = next(j for j in range(n - 1, i, -1) if nums[j] == jt)
+            nums[i], nums[j] = nums[j], nums[i]
             return
 
-        it = nums[i]
-
-        jt = min(jt for jt in nums[i + 1 :] if jt > it)
-        j = next(j for j in range(n - 1, i, -1) if nums[j] == jt)
-
-        nums[i], nums[j] = nums[j], nums[i]
+        i = next((i - 1 for i in range(n - 1, 0, -1) if nums[i - 1] < nums[i]), -1)
+        try_swap(i)
         reverse(i + 1, n)
