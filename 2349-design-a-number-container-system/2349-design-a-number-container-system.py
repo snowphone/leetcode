@@ -7,7 +7,7 @@ class NumberContainers:
         self.rev = defaultdict(SortedList)
 
     def change(self, index: int, number: int) -> None:
-        "O(n log(n))"
+        "O(log(n))"
         prev_number = self.container.get(index)
         if prev_number is not None:
             self.rev[prev_number].remove(index)
