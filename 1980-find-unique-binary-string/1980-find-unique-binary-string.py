@@ -1,17 +1,13 @@
 class Solution:
     def findDifferentBinaryString(self, nums: List[str]) -> str:
-        n = len(nums[0])
-        numset = {int(it, 2) for it in nums}
+        numset = frozenset(nums)
+
+        sz = len(nums[0])
+
+        def find(s: str, i: int):
+            if i == sz:
+                return s if s not in numset else None
+            
+            return find('0' + s, i+1) or find('1'+s, i+1)
         
-        
-        def tobin(num):
-            answer = []
-            for i in range(n):
-                if num & (1 << i):
-                    answer.append('1')
-                else:
-                    answer.append('0')
-            return ''.join(reversed(answer))
-        
-        ans = next(i for i in range(2 ** n) if i not in numset)
-        return tobin(ans)
+        return find('', 0)
